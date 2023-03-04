@@ -14,11 +14,11 @@ public class User {
     private String password;
     private String originalIp;
     private String maskedIp;
-    private boolean connected;
+    private Boolean connected;
 
     //parent wrt to country
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-    private Country country;
+    private Country originalCountry;
 
 
     //parent wrt to connection
@@ -75,20 +75,20 @@ public class User {
         this.maskedIp = maskedIp;
     }
 
-    public boolean isConnected() {
+    public Boolean getConnected() {
         return connected;
     }
 
-    public void setConnected(boolean connected) {
+    public void setConnected(Boolean connected) {
         this.connected = connected;
     }
 
-    public Country getCountry() {
-        return country;
+    public Country getOriginalCountry() {
+        return originalCountry;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setOriginalCountry(Country originalCountry) {
+        this.originalCountry = originalCountry;
     }
 
     public List<Connection> getConnectionList() {

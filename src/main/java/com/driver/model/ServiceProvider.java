@@ -49,11 +49,6 @@ public class ServiceProvider {
         this.users = users;
     }
 
-    public ServiceProvider(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public List<Country> getCountryList() {
         return countryList;
     }
