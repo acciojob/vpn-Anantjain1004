@@ -11,8 +11,6 @@ import com.driver.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -24,8 +22,7 @@ public class UserServiceImpl implements UserService {
     CountryRepository countryRepository3;
 
     @Override
-    public User register(String username, String password, String countryName) throws Exception {
-
+    public User register(String username, String password, String countryName) throws Exception{
         User user = new User();
         if(countryName.equalsIgnoreCase("IND") || countryName.equalsIgnoreCase("USA")|| countryName.equalsIgnoreCase("JPN")|| countryName.equalsIgnoreCase("AUS")|| countryName.equalsIgnoreCase("CHI")){
             user.setUsername(username);
@@ -61,15 +58,17 @@ public class UserServiceImpl implements UserService {
             user.setOriginalIp(code); //new
 
             userRepository3.save(user);
+
+
         }
         else{  //means user is null
             throw new Exception("Country not found");
         }
         return user;
     }
+
     @Override
     public User subscribe(Integer userId, Integer serviceProviderId) {
-
         User user = userRepository3.findById(userId).get();
         ServiceProvider serviceProvider = serviceProviderRepository3.findById(serviceProviderId).get();
 
@@ -78,5 +77,6 @@ public class UserServiceImpl implements UserService {
 
         serviceProviderRepository3.save(serviceProvider);
         return user;
+
     }
 }

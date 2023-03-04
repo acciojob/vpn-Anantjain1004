@@ -1,7 +1,6 @@
 package com.driver.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,29 +9,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String username;
     private String password;
     private String originalIp;
     private String maskedIp;
     private Boolean connected;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Connection> connectionList;
 
-    //parent wrt to country
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinColumn
+    private List<ServiceProvider> serviceProviderList;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Country originalCountry;
 
 
-    //parent wrt to connection
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Connection> connectionList = new ArrayList<>();
-
-    //child wrt to serviceprovider
-    @ManyToMany
-    @JoinColumn
-    private List<ServiceProvider> serviceProviderList = new ArrayList<>();
-
     public User() {
     }
-
 
 
     public int getId() {
@@ -83,14 +78,6 @@ public class User {
         this.connected = connected;
     }
 
-    public Country getOriginalCountry() {
-        return originalCountry;
-    }
-
-    public void setOriginalCountry(Country originalCountry) {
-        this.originalCountry = originalCountry;
-    }
-
     public List<Connection> getConnectionList() {
         return connectionList;
     }
@@ -105,5 +92,13 @@ public class User {
 
     public void setServiceProviderList(List<ServiceProvider> serviceProviderList) {
         this.serviceProviderList = serviceProviderList;
+    }
+
+    public Country getOriginalCountry() {
+        return originalCountry;
+    }
+
+    public void setOriginalCountry(Country originalCountry) {
+        this.originalCountry = originalCountry;
     }
 }

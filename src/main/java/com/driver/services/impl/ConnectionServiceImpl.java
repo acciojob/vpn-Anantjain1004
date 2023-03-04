@@ -5,6 +5,7 @@ import com.driver.repository.ConnectionRepository;
 import com.driver.repository.ServiceProviderRepository;
 import com.driver.repository.UserRepository;
 import com.driver.services.ConnectionService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,8 @@ public class ConnectionServiceImpl implements ConnectionService {
     ConnectionRepository connectionRepository2;
 
     @Override
-    public User connect(int userId, String countryName) throws Exception {
+    public User connect(int userId, String countryName) throws Exception{
+
         User user = userRepository2.findById(userId).get();
         if(user.getMaskedIp()!=null){
             throw new Exception("Already connected");
@@ -76,15 +78,13 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
     @Override
     public User disconnect(int userId) throws Exception {
-//If the given user was not connected to a vpn, throw "Already disconnected" exception.
-        //Else, disconnect from vpn, make masked Ip as null, update relevant attributes and return updated user.
         User user = userRepository2.findById(userId).get();
         if(user.getConnected()==false){
             throw new Exception("Already disconnected");
         }
         user.setMaskedIp(null);
         user.setConnected(false);
-        userRepository2.delete(user);
+        userRepository2.save(user);
         return user;
     }
     @Override
