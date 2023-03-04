@@ -26,7 +26,7 @@ public class ServiceProvider {
     private List<Connection> connectionList = new ArrayList<>();
 
     //parent wrt to user
-    @ManyToMany(mappedBy = "serviceProvider",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "serviceProviderList",cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
 
